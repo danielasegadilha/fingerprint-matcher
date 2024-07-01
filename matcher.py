@@ -47,5 +47,5 @@ if (len(match_points) / keypoints)>0.3:
   print("Figerprint ID: " + str(file))
   result = cv2.drawMatches(test_original, keypoints_1, fingerprint_database_image, keypoints_2, match_points, None)
   result = cv2.resize(result, None, fx=2.5, fy=2.5)
-  cv2_imshow(result)
+  cv2.imshow(result)
   cv2.waitKey(0)
