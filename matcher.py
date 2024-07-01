@@ -13,7 +13,7 @@ database_folders = [
 
 # Caminhos das pastas
 base_path = os.path.join("..", "Data")
-test_descriptors_path = os.path.join(base_path, "Fingerprint", "file8.txt")
+test_descriptors_path = os.path.join(base_path, "Fingerprint", "file7.txt")
 database_base_path = os.path.join(base_path, "Data-base")
 
 
@@ -57,6 +57,7 @@ for folder in database_folders:
         if np.array_equal(test_descriptors, descriptors_2):
             found = True
             print("Fingerprint match found!")
+            print(f"From: {folder}")
             print("Fingerprint ID: " + str(file))
             break
 
