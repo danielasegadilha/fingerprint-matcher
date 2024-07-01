@@ -11,8 +11,13 @@ database_folders = [
     "DB4_B"
 ]
 
+# Caminhos das pastas
+base_path = os.path.join("..", "data")
+test_image_path = os.path.join(base_path, "fingerprint", "finger-print.png")
+database_base_path = os.path.join(base_path, "Data-base")
+
 # Leitura da imagem de teste
-test_original = cv2.imread("finger-print.png")
+test_original = cv2.imread(test_image_path)
 cv2.imshow("Test Original", test_original)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -25,13 +30,13 @@ keypoints_2 = []
 
 # Iteração por cada banco de dados
 for folder in database_folders:
-    db_path = os.path.join("./database", folder)
+    db_path = os.path.join(database_base_path, folder)
     for file in os.listdir(db_path):
         fingerprint_database_image = cv2.imread(os.path.join(db_path, file))
         if fingerprint_database_image is None:
             continue
 
-        sift = cv2.xfeatures2d.SIFT_create()
+        sift = cv2.SIFT_create()
 
         keypoints_1, descriptors_1 = sift.detectAndCompute(test_original, None)
         keypoints_2, descriptors_2 = sift.detectAndCompute(fingerprint_database_image, None)
@@ -50,7 +55,8 @@ for folder in database_folders:
             found = True
             print("% match: ", len(match_points) / keypoints * 100)
             print("Fingerprint ID: " + str(file))
-            result = cv2.drawMatches(test_original, keypoints_1, fingerprint_database_image, keypoints_2, match_points, None)
+            result = cv2.drawMatches(test_original, keypoints_1, fingerprint_database_image, keypoints_2, match_points,
+                                     None)
             result = cv2.resize(result, None, fx=2.5, fy=2.5)
             cv2.imshow("Result", result)
             cv2.waitKey(0)
